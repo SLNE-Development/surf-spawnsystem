@@ -4,6 +4,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 
 data class SingleSpawnConfig(
+    val spawnName: String,
     val worldName: String,
     val x: Double,
     val y: Double,
