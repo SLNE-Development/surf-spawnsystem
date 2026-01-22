@@ -4,6 +4,7 @@ import dev.slne.surf.spawn.config.SingleSpawnConfig
 import dev.slne.surf.spawn.config.SpawnConfig
 import dev.slne.surf.spawn.plugin
 import dev.slne.surf.spawn.spawnConfig
+import dev.slne.surf.spawn.spawnConfigManager
 import dev.slne.surf.surfapi.core.api.util.mutableObjectSetOf
 import org.bukkit.Location
 
@@ -33,7 +34,7 @@ class SpawnService {
         )
         _spawns.add(newSpawn)
 
-        plugin.spawnConfigManager.edit {
+        spawnConfigManager.edit {
             spawns = spawns + newSpawn
         }
     }
@@ -42,7 +43,7 @@ class SpawnService {
         val spawn = getSpawn(spawnName) ?: return
         _spawns.remove(spawn)
 
-        plugin.spawnConfigManager.edit {
+        spawnConfigManager.edit {
             spawns = spawns.filterNot { it.spawnName.equals(spawnName, ignoreCase = true) }
         }
     }

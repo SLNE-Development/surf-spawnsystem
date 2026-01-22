@@ -1,7 +1,9 @@
 package dev.slne.surf.spawn.config
 
 import org.bukkit.Bukkit
+import org.spongepowered.configurate.objectmapping.ConfigSerializable
 
+@ConfigSerializable
 data class SpawnConfig(
     var spawns: List<SingleSpawnConfig> = mutableListOf(Bukkit.getWorlds().first().spawnLocation.let {
         SingleSpawnConfig(

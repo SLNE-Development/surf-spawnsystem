@@ -11,6 +11,7 @@ import dev.slne.surf.spawn.config.SingleSpawnConfig
 import dev.slne.surf.spawn.permission.PermissionRegistry
 import dev.slne.surf.spawn.plugin
 import dev.slne.surf.spawn.service.spawnService
+import dev.slne.surf.spawn.spawnConfigManager
 import dev.slne.surf.surfapi.core.api.messages.adventure.getPointer
 import dev.slne.surf.surfapi.core.api.messages.adventure.sendText
 import net.kyori.adventure.identity.Identity
@@ -39,7 +40,7 @@ fun surfSpawnCommand() = commandTree("surfSpawn") {
 
     literalArgument("reload") {
         anyExecutor { executor, _ ->
-            plugin.spawnConfigManager.reload()
+            spawnConfigManager.reload()
             spawnService.reloadSpawns()
 
             executor.sendText {

@@ -13,8 +13,6 @@ import org.bukkit.plugin.java.JavaPlugin
 val plugin get() = JavaPlugin.getPlugin(PaperMain::class.java)
 
 class PaperMain : SuspendingJavaPlugin() {
-    val spawnConfigManager = SpawnConfigManager()
-
     override fun onEnable() {
         spawnCommand()
         surfSpawnCommand()
@@ -26,4 +24,5 @@ class PaperMain : SuspendingJavaPlugin() {
     }
 }
 
-val spawnConfig get() = plugin.spawnConfigManager.config
+val spawnConfigManager = SpawnConfigManager()
+val spawnConfig get() = spawnConfigManager.config
