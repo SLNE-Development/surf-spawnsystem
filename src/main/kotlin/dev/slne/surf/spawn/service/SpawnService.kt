@@ -18,6 +18,8 @@ class SpawnService {
     }
 
     fun getSpawns() = _spawns
+    fun getSpawn(name: String) = _spawns.firstOrNull { it.spawnName.equals(name, ignoreCase = true) }
+
 
     fun addSpawn(spawnName: String, location: Location) {
         val newSpawn = SingleSpawnConfig(
@@ -36,8 +38,18 @@ class SpawnService {
         }
     }
 
+    fun deleteSpawn(spawnName: String) {
+        val spawn = getSpawn(spawnName) ?: return
+        _spawns.remove(spawn)
+
+        plugin.spawnConfigManager.edit {
+            spawns = spawns.filterNot { it.spawnName.equals(spawnName, ignoreCase = true) }
+        }
+    }
+
     fun getNearestSpawn(location: Location) =
         _spawns.minByOrNull { it.location.distanceSquared(location) }
+    fun getNearestSpawnLocation(location: Location) = getNearestSpawn(location)?.location ?: error("No spawns available")
 
     fun getRandomSpawn() = _spawns.randomOrNull()
     fun getRandomSpawnLocation() = getRandomSpawn()?.location

@@ -6,7 +6,10 @@ import dev.jorel.commandapi.kotlindsl.getValue
 import dev.jorel.commandapi.kotlindsl.literalArgument
 import dev.jorel.commandapi.kotlindsl.playerExecutor
 import dev.jorel.commandapi.kotlindsl.stringArgument
+import dev.slne.surf.spawn.command.argument.spawnArgument
+import dev.slne.surf.spawn.config.SingleSpawnConfig
 import dev.slne.surf.spawn.permission.PermissionRegistry
+import dev.slne.surf.spawn.plugin
 import dev.slne.surf.spawn.service.spawnService
 import dev.slne.surf.surfapi.core.api.messages.adventure.getPointer
 import dev.slne.surf.surfapi.core.api.messages.adventure.sendText
@@ -29,6 +32,35 @@ fun surfSpawnCommand() = commandTree("surfSpawn") {
                     success("Der Spawn ")
                     variableValue(spawnName)
                     success(" wurde gespeichert.")
+                }
+            }
+        }
+    }
+
+    literalArgument("reload") {
+        anyExecutor { executor, _ ->
+            plugin.spawnConfigManager.reload()
+            spawnService.reloadSpawns()
+
+            executor.sendText {
+                appendPrefix()
+                success("Die Spawns wurden neu geladen.")
+            }
+        }
+    }
+
+    literalArgument("delete") {
+        spawnArgument("spawn") {
+            anyExecutor { executor, args ->
+                val spawn: SingleSpawnConfig by args
+
+                spawnService.deleteSpawn(spawn.spawnName)
+
+                executor.sendText {
+                    appendPrefix()
+                    success("Der Spawn ")
+                    variableValue(spawn.spawnName)
+                    success(" wurde gelöscht.")
                 }
             }
         }

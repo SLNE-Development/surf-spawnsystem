@@ -7,5 +7,6 @@ object PermissionRegistry : PermissionRegistry() {
     const val BASE_COMMAND = "$BASE.command"
 
     val COMMAND_SPAWN = create("$BASE_COMMAND.spawn")
+    val COMMAND_SPAWN_SELECT = create("$BASE_COMMAND.spawn.select")
     val COMMAND_SURF_SPAWN = create("$BASE_COMMAND.surfspawn")
 }
