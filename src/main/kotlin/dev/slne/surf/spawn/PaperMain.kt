@@ -4,6 +4,10 @@ import com.github.shynixn.mccoroutine.folia.SuspendingJavaPlugin
 import dev.slne.surf.spawn.command.spawnCommand
 import dev.slne.surf.spawn.command.surfSpawnCommand
 import dev.slne.surf.spawn.config.manager.SpawnConfigManager
+import dev.slne.surf.spawn.listener.PlayerJoinListener
+import dev.slne.surf.spawn.listener.PlayerRespawnListener
+import dev.slne.surf.spawn.service.spawnService
+import dev.slne.surf.surfapi.bukkit.api.event.register
 import org.bukkit.plugin.java.JavaPlugin
 
 val plugin get() = JavaPlugin.getPlugin(PaperMain::class.java)
@@ -14,6 +18,11 @@ class PaperMain : SuspendingJavaPlugin() {
     override fun onEnable() {
         spawnCommand()
         surfSpawnCommand()
+
+        spawnService.reloadSpawns()
+
+        PlayerJoinListener.register()
+        PlayerRespawnListener.register()
     }
 }
 
