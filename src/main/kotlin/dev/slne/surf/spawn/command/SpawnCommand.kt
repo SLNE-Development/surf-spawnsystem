@@ -15,7 +15,7 @@ fun spawnCommand() = commandTree("spawn") {
     playerExecutor { player, _ ->
         player.teleportAsync(spawnService.getNearestSpawnLocation(player.location)).thenRun {
             player.sendText {
-                appendPrefix()
+                appendSuccessPrefix()
                 success("Du wurdest zum nächsten Spawn teleportiert.")
             }
         }
@@ -28,7 +28,7 @@ fun spawnCommand() = commandTree("spawn") {
 
             player.teleportAsync(spawn.location).thenRun {
                 player.sendText {
-                    appendPrefix()
+                    appendSuccessPrefix()
                     success("Du wurdest zum Spawn ")
                     variableValue(spawn.spawnName)
                     success(" teleportiert.")

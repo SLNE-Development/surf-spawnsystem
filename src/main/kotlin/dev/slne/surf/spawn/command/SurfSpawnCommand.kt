@@ -29,7 +29,7 @@ fun surfSpawnCommand() = commandTree("surfSpawn") {
                 spawnService.addSpawn(spawnName, player.location)
 
                 player.sendText {
-                    appendPrefix()
+                    appendSuccessPrefix()
                     success("Der Spawn ")
                     variableValue(spawnName)
                     success(" wurde gespeichert.")
@@ -44,7 +44,7 @@ fun surfSpawnCommand() = commandTree("surfSpawn") {
             spawnService.reloadSpawns()
 
             executor.sendText {
-                appendPrefix()
+                appendSuccessPrefix()
                 success("Die Spawns wurden neu geladen.")
             }
         }
@@ -58,7 +58,7 @@ fun surfSpawnCommand() = commandTree("surfSpawn") {
                 spawnService.deleteSpawn(spawn.spawnName)
 
                 executor.sendText {
-                    appendPrefix()
+                    appendSuccessPrefix()
                     success("Der Spawn ")
                     variableValue(spawn.spawnName)
                     success(" wurde gelöscht.")
@@ -73,14 +73,14 @@ fun surfSpawnCommand() = commandTree("surfSpawn") {
 
             if(spawns.isEmpty()) {
                 executor.sendText {
-                    appendPrefix()
+                    appendErrorPrefix()
                     error("Es sind keine Spawns gespeichert.")
                 }
                 return@anyExecutor
             }
 
             executor.sendText {
-                appendPrefix()
+                appendInfoPrefix()
                 info("Es sind ")
                 variableValue(spawns.size)
                 info(" Spawns gespeichert: ")
@@ -91,7 +91,7 @@ fun surfSpawnCommand() = commandTree("surfSpawn") {
                         clickEvent(ClickEvent.callback {
                             Bukkit.getPlayer(it.getPointer(Identity.UUID) ?: return@callback)?.teleportAsync(spawn.location)?.thenRun {
                                 it.sendText {
-                                    appendPrefix()
+                                    appendSuccessPrefix()
                                     success("Du wurdest zum Spawn ")
                                     variableValue(spawn.spawnName)
                                     success(" teleportiert.")

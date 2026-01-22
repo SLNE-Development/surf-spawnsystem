@@ -15,7 +15,7 @@ class SpawnArgument(nodeName: String) :
     CustomArgument<SingleSpawnConfig, String>(StringArgument(nodeName), { info ->
         spawnService.getSpawn(info.input) ?: throw CustomArgumentException.fromAdventureComponent(
             buildText {
-                appendPrefix()
+                appendErrorPrefix()
                 error("Der Spawn wurde nicht gefunden.")
             })
     }) {
