@@ -49,7 +49,7 @@ class SpawnService {
     }
 
     fun getNearestSpawn(location: Location) =
-        _spawns.minByOrNull { it.location.distanceSquared(location) }
+        _spawns.filter { it.world == location.world }.minByOrNull { it.location.distanceSquared(location) }
     fun getNearestSpawnLocation(location: Location) = getNearestSpawn(location)?.location ?: error("No spawns available")
 
     fun getRandomSpawn() = _spawns.randomOrNull()
