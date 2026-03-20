@@ -14,6 +14,8 @@ object PlayerRespawnListener : Listener {
             return
         }
 
-        event.respawnLocation = spawnService.getNearestSpawn(event.player.location)?.location ?: error("Could not find nearest spawn!")
+        spawnService.getNearestSpawn(event.player.location)?.location?.let {
+            event.respawnLocation = it
+        }
     }
 }
