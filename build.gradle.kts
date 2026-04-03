@@ -10,5 +10,7 @@ surfPaperPluginApi {
     foliaSupported(true)
     generateLibraryLoader(false)
 
+    useCanvasMc()
+
     authors.addAll("red")
 }
