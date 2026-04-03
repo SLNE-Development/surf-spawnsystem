@@ -5,6 +5,7 @@ import org.spongepowered.configurate.objectmapping.ConfigSerializable
 
 @ConfigSerializable
 data class SpawnConfig(
+    val spawnRadius: Double = 200.0,
     var spawns: List<SingleSpawnConfig> = mutableListOf(Bukkit.getWorlds().first().spawnLocation.let {
         SingleSpawnConfig(
             spawnName = "vanilla_spawn",
