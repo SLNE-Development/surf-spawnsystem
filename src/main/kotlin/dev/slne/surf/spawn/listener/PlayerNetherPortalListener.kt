@@ -11,22 +11,16 @@ import org.bukkit.event.Listener
 object PlayerNetherPortalListener : Listener {
     @EventHandler
     fun onNetherPortal(event: EntityPostPortalAsyncEvent) {
-        println("Entity ${event.entity.name} entered a portal of type ${event.portalType}")
         if (event.portalType != PortalType.NETHER) {
             return
         }
 
-        println("Checking if entity is in spawn protection...")
-
         val spawn = isInSpawnProtection(event.entity.location) ?: return
-        println("Entity is in spawn protection, teleporting to spawn ${spawn.spawnName} at ${spawn.location}")
         event.entity.teleportAsync(spawn.location)
     }
 
     private fun isInSpawnProtection(location: Location): SingleSpawnConfig? =
         spawnConfig.spawns.firstOrNull { spawn ->
-            (spawn.location.world == location.world && spawn.boundingBox.contains(location.toVector())).also {
-                println("Spawn ${spawn.spawnName} is ${if (it) "within" else "outside of"} spawn protection radius")
-            }
+            spawn.location.world == location.world && spawn.boundingBox.contains(location.toVector())
         }
 }
