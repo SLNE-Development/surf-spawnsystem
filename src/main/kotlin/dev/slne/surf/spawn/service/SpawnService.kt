@@ -1,11 +1,10 @@
 package dev.slne.surf.spawn.service
 
 import dev.slne.surf.spawn.config.SingleSpawnConfig
-import dev.slne.surf.spawn.config.SpawnConfig
-import dev.slne.surf.spawn.plugin
 import dev.slne.surf.spawn.spawnConfig
 import dev.slne.surf.spawn.spawnConfigManager
 import dev.slne.surf.surfapi.core.api.util.mutableObjectSetOf
+import org.bukkit.Bukkit
 import org.bukkit.Location
 
 val spawnService = SpawnService()
@@ -19,7 +18,8 @@ class SpawnService {
     }
 
     fun getSpawns() = _spawns
-    fun getSpawn(name: String) = _spawns.firstOrNull { it.spawnName.equals(name, ignoreCase = true) }
+    fun getSpawn(name: String) =
+        _spawns.firstOrNull { it.spawnName.equals(name, ignoreCase = true) }
 
 
     fun addSpawn(spawnName: String, location: Location) {
@@ -49,9 +49,14 @@ class SpawnService {
     }
 
     fun getNearestSpawn(location: Location) =
-        _spawns.filter { it.world == location.world }.minByOrNull { it.location.distanceSquared(location) }
-    fun getNearestSpawnLocation(location: Location) = getNearestSpawn(location)?.location ?: error("No spawns available")
+        _spawns.filter { it.world == location.world }
+            .minByOrNull { it.location.distanceSquared(location) }
 
-    fun getRandomSpawn() = _spawns.randomOrNull()
-    fun getRandomSpawnLocation() = getRandomSpawn()?.location
+    fun getNearestSpawnLocation(location: Location) =
+        getNearestSpawn(location)?.location ?: error("No spawns available")
+
+    fun getRandomOverworldSpawn() =
+        _spawns.filter { it.world == Bukkit.getWorlds().first() }.randomOrNull()
+
+    fun getRandomOverworldSpawnLocation() = getRandomOverworldSpawn()?.location
 }
