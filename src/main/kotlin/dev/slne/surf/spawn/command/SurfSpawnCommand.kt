@@ -1,19 +1,13 @@
 package dev.slne.surf.spawn.command
 
-import dev.jorel.commandapi.kotlindsl.anyExecutor
-import dev.jorel.commandapi.kotlindsl.commandTree
-import dev.jorel.commandapi.kotlindsl.getValue
-import dev.jorel.commandapi.kotlindsl.literalArgument
-import dev.jorel.commandapi.kotlindsl.playerExecutor
-import dev.jorel.commandapi.kotlindsl.stringArgument
+import dev.jorel.commandapi.kotlindsl.*
+import dev.slne.surf.api.core.messages.adventure.getPointer
+import dev.slne.surf.api.core.messages.adventure.sendText
 import dev.slne.surf.spawn.command.argument.spawnArgument
 import dev.slne.surf.spawn.config.SingleSpawnConfig
 import dev.slne.surf.spawn.permission.PermissionRegistry
-import dev.slne.surf.spawn.plugin
 import dev.slne.surf.spawn.service.spawnService
 import dev.slne.surf.spawn.spawnConfigManager
-import dev.slne.surf.surfapi.core.api.messages.adventure.getPointer
-import dev.slne.surf.surfapi.core.api.messages.adventure.sendText
 import net.kyori.adventure.identity.Identity
 import net.kyori.adventure.text.event.ClickEvent
 import org.bukkit.Bukkit
@@ -71,7 +65,7 @@ fun surfSpawnCommand() = commandTree("surfSpawn") {
         anyExecutor { executor, _ ->
             val spawns = spawnService.getSpawns()
 
-            if(spawns.isEmpty()) {
+            if (spawns.isEmpty()) {
                 executor.sendText {
                     appendErrorPrefix()
                     error("Es sind keine Spawns gespeichert.")
@@ -89,17 +83,18 @@ fun surfSpawnCommand() = commandTree("surfSpawn") {
                     append {
                         variableValue(spawn.spawnName)
                         clickEvent(ClickEvent.callback {
-                            Bukkit.getPlayer(it.getPointer(Identity.UUID) ?: return@callback)?.teleportAsync(spawn.location)?.thenRun {
-                                it.sendText {
-                                    appendSuccessPrefix()
-                                    success("Du wurdest zum Spawn ")
-                                    variableValue(spawn.spawnName)
-                                    success(" teleportiert.")
+                            Bukkit.getPlayer(it.getPointer(Identity.UUID) ?: return@callback)
+                                ?.teleportAsync(spawn.location)?.thenRun {
+                                    it.sendText {
+                                        appendSuccessPrefix()
+                                        success("Du wurdest zum Spawn ")
+                                        variableValue(spawn.spawnName)
+                                        success(" teleportiert.")
+                                    }
                                 }
-                            }
                         })
 
-                        if(index < spawns.size - 1) {
+                        if (index < spawns.size - 1) {
                             spacer(", ")
                         }
                     }

@@ -3,11 +3,11 @@ package dev.slne.surf.spawn.command
 import dev.jorel.commandapi.kotlindsl.commandTree
 import dev.jorel.commandapi.kotlindsl.getValue
 import dev.jorel.commandapi.kotlindsl.playerExecutor
+import dev.slne.surf.api.core.messages.adventure.sendText
 import dev.slne.surf.spawn.command.argument.spawnArgument
 import dev.slne.surf.spawn.config.SingleSpawnConfig
 import dev.slne.surf.spawn.permission.PermissionRegistry
 import dev.slne.surf.spawn.service.spawnService
-import dev.slne.surf.surfapi.core.api.messages.adventure.sendText
 
 fun spawnCommand() = commandTree("spawn") {
     withPermission(PermissionRegistry.COMMAND_SPAWN)

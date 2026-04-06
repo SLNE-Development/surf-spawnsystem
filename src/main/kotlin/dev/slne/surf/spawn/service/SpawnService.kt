@@ -1,9 +1,9 @@
 package dev.slne.surf.spawn.service
 
+import dev.slne.surf.api.core.util.mutableObjectSetOf
 import dev.slne.surf.spawn.config.SingleSpawnConfig
 import dev.slne.surf.spawn.spawnConfig
 import dev.slne.surf.spawn.spawnConfigManager
-import dev.slne.surf.surfapi.core.api.util.mutableObjectSetOf
 import org.bukkit.Bukkit
 import org.bukkit.Location
 
