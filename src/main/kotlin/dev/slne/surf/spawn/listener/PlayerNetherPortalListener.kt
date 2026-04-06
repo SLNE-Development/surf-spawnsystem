@@ -5,6 +5,9 @@ import dev.slne.surf.spawn.spawnConfig
 import io.canvasmc.canvas.event.EntityPostPortalAsyncEvent
 import org.bukkit.Location
 import org.bukkit.PortalType
+import org.bukkit.entity.Entity
+import org.bukkit.entity.LivingEntity
+import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 
@@ -15,12 +18,21 @@ object PlayerNetherPortalListener : Listener {
             return
         }
 
-        val spawn = isInSpawnProtection(event.entity.location) ?: return
-        event.entity.teleportAsync(spawn.location)
+        val entity = event.entity
+        if (!entity.isAllowedToEnter()) {
+            return
+        }
+
+        val spawn = isInSpawnProtection(entity.location) ?: return
+        entity.teleportAsync(spawn.location)
     }
 
     private fun isInSpawnProtection(location: Location): SingleSpawnConfig? =
         spawnConfig.spawns.firstOrNull { spawn ->
             spawn.location.world == location.world && spawn.boundingBox.contains(location.toVector())
         }
+
+    private fun Entity.isAllowedToEnter(): Boolean {
+        return this is LivingEntity && this !is Projectile
+    }
 }
