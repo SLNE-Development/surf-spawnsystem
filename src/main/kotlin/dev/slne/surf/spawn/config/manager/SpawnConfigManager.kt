@@ -1,7 +1,7 @@
 package dev.slne.surf.spawn.config.manager
 
-import dev.slne.surf.api.core.config.SurfConfigApi
 import dev.slne.surf.api.core.config.manager.SpongeConfigManager
+import dev.slne.surf.api.core.config.surfConfigApi
 import dev.slne.surf.spawn.config.SpawnConfig
 import dev.slne.surf.spawn.plugin
 
@@ -9,12 +9,12 @@ class SpawnConfigManager {
     private val configManager: SpongeConfigManager<SpawnConfig>
 
     init {
-        SurfConfigApi.createSpongeYmlConfig(
+        surfConfigApi.createSpongeYmlConfig(
             SpawnConfig::class.java,
             plugin.dataPath,
             "config.yml"
         )
-        configManager = SurfConfigApi.getSpongeConfigManagerForConfig(
+        configManager = surfConfigApi.getSpongeConfigManagerForConfig(
             SpawnConfig::class.java
         )
         reload()
